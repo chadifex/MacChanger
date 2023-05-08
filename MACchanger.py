@@ -1,6 +1,6 @@
 # MAC Address Changer Script
 # ctrl + / comments all highlighted lines
-import subprocess
+import subprocess # w library
 
 
 interface = input("enter interface: ") # for python2
@@ -12,7 +12,7 @@ subprocess.call("ifconfig " + interface + " down", shell=True)
 subprocess.call("ifconfig " + interface + " hw ether " + new_mac, shell=True)
 subprocess.call("ifconfig " + interface + " up", shell=True)
 subprocess.call("ifconfig " + interface, shell=True) #see changed mac
-print(new_mac)
+print(new_mac) #extra verification
 # ctrl + d pastes line below
-# changes mac adress to 00:11:22:33:44:66
+# changes mac address to 00:11:22:33:44:66
 # subprocess is a library that lets you run OS commands
