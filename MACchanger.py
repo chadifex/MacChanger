@@ -23,7 +23,7 @@ def change_mac(interface, new_mac):
 
 # interface = options.interface
 # new_mac = options.new_mac
-options, arguments) = get_arguments()
+(options, arguments) = get_arguments()
 change_mac(options.interface, options.new_mac)
 
 # ctrl + d pastes line below
