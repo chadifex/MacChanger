@@ -2,6 +2,7 @@
 # ctrl + / comments all highlighted lines
 import subprocess # w library
 import optparse
+import re
 
 def get_arguments():
     parser = optparse.OptionParser()  # object to handle CLI args
@@ -16,20 +17,26 @@ def get_arguments():
     return options
     # options contains input, arguments contains --interface, --mac etc
 
+
 def change_mac(interface, new_mac):
     print("[+] Changing MAC Address for: " + interface + " to: " + new_mac)
-    subprocess.call(["ifconfig", interface])  # see old mac
     subprocess.call(["ifconfig", interface, "down"])  # no + but , instead
     subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
     subprocess.call(["ifconfig", interface + "up"])  # no space between "" as not using shell=True does it auto
-    subprocess.call(["ifconfig", interface])  # see changed mac
     print(new_mac)  # extra verification
 
 # interface = options.interface
 # new_mac = options.new_mac
 options = get_arguments()
-change_mac(options.interface, options.new_mac)
+#change_mac(options.interface, options.new_mac)
+ifconfig_result = subprocess.check_output(["ifconfig", options.interface])
+print(ifconfig_result)
 
+mac_address_search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", str(ifconfig_result))
+if mac_address_search_result:
+    print(mac_address_search_result.group(0))
+else:
+    print("[-] Could not read MAC Address.")
 # ctrl + d pastes line below
 # changes mac address to 00:11:22:33:44:66
 # subprocess is a library that lets you run OS commands
